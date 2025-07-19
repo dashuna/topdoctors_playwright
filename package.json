@@ -1,0 +1,23 @@
+{
+    "name": "topdoctors_playwright",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx playwright test",
+        "test:mx": "ENV=mx npx playwright test",
+        "test:ar": "ENV=ar npx playwright test",
+        "test:headed": "npx playwright test --headed",
+        "test:headed:mx": "ENV=mx npx playwright test --headed",
+        "test:headed:ar": "ENV=ar npx playwright test --headed",
+        "test:ui": "npx playwright test --ui",
+        "report": "npx playwright show-report"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "@playwright/test": "^1.54.1",
+        "@types/node": "^24.0.14"
+    }
+}
