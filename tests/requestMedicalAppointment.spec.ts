@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import HomePage from '../pages/HomePage';
 import BookingPage from '../pages/BookingPage';
 import ProviderPage from '../pages/ProviderPage';
+import { closeModalIfVisible } from '../utils/commonFunctions';
 
 test.describe('Request medical appointment', () => {
     test.beforeEach(async ({ page }) => {
@@ -20,6 +21,7 @@ test.describe('Request medical appointment', () => {
       expect(page.url()).toContain('/ciudad-de-mexico/cardiologia-especialidad/');   
             
       await providerPage.selectAvailableProvider();
+      closeModalIfVisible();
       await page.waitForURL('**/booking/register/?booking=on-site');
       expect(page.url()).toContain('/booking/register/?booking=on-site');
 

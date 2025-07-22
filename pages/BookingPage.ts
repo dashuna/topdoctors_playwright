@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import environment from '../config/environments';
+import { closeModalIfVisible } from "../utils/commonFunctions";
 export default class BookingPage extends BasePage {
 
     constructor(page: Page) {
@@ -21,8 +22,8 @@ export default class BookingPage extends BasePage {
     private readonly patientGenger = 'select[name=sex]';
     private readonly patientBirthDate = 'div.calendar';
     // private readonly date = 'input[placeholder="DD"]'
-    // private readonly month= 'input[placeholder="MM"]'
-    // private readonly year= 'input[placeholder="YYYY"]'
+    // private readonly month = 'input[placeholder="MM"]'
+    // private readonly year = 'input[placeholder="YYYY"]'
 
     // Terms and Conditions
     private readonly termsCheckbox = '#checkboxv-0-0-0-0-0'; //'input#terms';
@@ -33,6 +34,7 @@ export default class BookingPage extends BasePage {
     private readonly confirmationMessage = '.booking-confirmation';
 
     public async login() {
+        closeModalIfVisible();
         await this.click(this.loginTab);
         await this.fill(this.emailInput, environment.auth.patient.email);
         await this.fill(this.passwordInput, environment.auth.patient.password);
