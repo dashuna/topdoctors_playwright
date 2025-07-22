@@ -31,10 +31,6 @@ export default class SearchComponent {
         await firstSuggestion.click();
         
         // TODO: Verificar que la sugerencia contiene el término buscado
-        // const suggestiontext = await firstsuggestion.textcontent();
-        // if (!suggestiontext?.tolowercase().includes(specialty.tolowercase())) {
-        //     throw new error(`la sugerencia "${suggestiontext}" no coincide con el término buscado "${specialty}"`);
-        // }
     }
 
     /**

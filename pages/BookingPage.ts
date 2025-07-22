@@ -34,7 +34,6 @@ export default class BookingPage extends BasePage {
 
     public async login() {
         await this.click(this.loginTab);
-        await this.waitForElement(this.loginForm);
         await this.fill(this.emailInput, environment.auth.patient.email);
         await this.fill(this.passwordInput, environment.auth.patient.password);
         await this.click(this.loginButton);
