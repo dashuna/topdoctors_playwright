@@ -17,13 +17,11 @@ export default class SearchComponent {
     private readonly locationSearchResults = '#suggestion-location';
     private readonly searchButton = 'button[type="submit"]'; // button[type="submit"]:has(.td-icon-filled-search)
 
-
     /**
      * Realizar una búsqueda en la selección de especialidad
      * @param specialty término de especialidad a buscar
      */
     public async searchSpecialty(specialty: string) {
-        await this.page.locator('[title="Aceptar todo"]').click();
         const specialtyInput = this.page.locator(this.specialtyInput);
         await specialtyInput.click();
         //await expect(input).toBeEnabled({ timeout: 5000 });
@@ -31,7 +29,12 @@ export default class SearchComponent {
         await this.page.locator(this.specialtySearchResults).waitFor({ state: 'visible' });
         const firstSuggestion = this.page.locator(`${this.mostPopularList} li`).first();
         await firstSuggestion.click();
-      
+        
+        // TODO: Verificar que la sugerencia contiene el término buscado
+        // const suggestiontext = await firstsuggestion.textcontent();
+        // if (!suggestiontext?.tolowercase().includes(specialty.tolowercase())) {
+        //     throw new error(`la sugerencia "${suggestiontext}" no coincide con el término buscado "${specialty}"`);
+        // }
     }
 
     /**
@@ -55,8 +58,5 @@ export default class SearchComponent {
         // Esperar a que la búsqueda de especialidad se complete
         await this.searchLocation(location);
         await this.page.locator(this.searchButton).click();
-        
-        // Esperar a que la búsqueda se complete
-        await this.page.waitForNavigation();
     }
 }

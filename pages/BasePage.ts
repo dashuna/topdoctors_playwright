@@ -1,32 +1,17 @@
 import { Page, Locator } from '@playwright/test';
-import { Environment, getEnvironmentConfig } from '../config/environments';
-import SearchComponent from './components/SearchComponent';
+import environment from '../config/environments';
 
 export abstract class BasePage {
 
     protected page: Page;
-    protected env: Environment;
 
     constructor(page: Page) {
         this.page = page;
-        this.env = (process.env.ENV || 'mx') as Environment;
         this.setupBasicAuth();
     }
 
-    /**
-     * Get current environment configuration
-     */
-    protected getConfig() {
-        return getEnvironmentConfig(this.env);
-    }
-
-    /**
-     * Setup Basic Authentication
-     */
     private setupBasicAuth() {
-        const config = this.getConfig();
-        const { username, password } = config.auth.basic;
-
+        const { username, password } = environment.auth.basic;
         // Configurar basic auth para todas las peticiones
         this.page.context().setHTTPCredentials({
             username,
@@ -41,16 +26,15 @@ export abstract class BasePage {
     async getElement(selector: string): Promise<Locator> {
         return this.page.locator(selector);
     }
-
   
     async click(selector: string) {
         const element = await this.getElement(selector);
         await element.click();
     }
-
   
     async fill(selector: string, text: string) {
         const element = await this.getElement(selector);
+        this.waitForElement(selector);
         await element.fill(text);
     }
 

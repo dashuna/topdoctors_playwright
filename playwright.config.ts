@@ -1,18 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
-import { Environment, environments } from './config/environments';
+import environment from './config/environments';
 
-// Obtenemos el entorno de la variable de entorno o usamos 'mx' por defecto
-const ENV = (process.env.ENV || 'mx') as Environment;
-const environmentConfig = environments[ENV];
-
-if (!environmentConfig) {
-    throw new Error(`Environment "${ENV}" is not supported. Available environments: ${Object.keys(environments).join(', ')}`);
-}
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 60 * 1000, // Set a global timeout of 30 seconds
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,7 +21,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: environmentConfig.baseUrl,
+    baseURL: environment.baseUrl,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

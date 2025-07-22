@@ -1,4 +1,4 @@
-export type Environment = 'mx' | 'ar';
+type Environment = 'mx' | 'ar';
 
 interface EnvironmentConfig {
     baseUrl: string;
@@ -15,7 +15,7 @@ interface EnvironmentConfig {
     };
 }
 
-export const environments: Record<Environment, EnvironmentConfig> = {
+const environments: Record<Environment, EnvironmentConfig> = {
     mx: {
         baseUrl: 'https://staging.topdoctors.mx',
         country: 'México',
@@ -46,6 +46,12 @@ export const environments: Record<Environment, EnvironmentConfig> = {
     }
 };
 
-export const getEnvironmentConfig = (env: Environment): EnvironmentConfig => {
-    return environments[env];
-};
+// Obtenemos el entorno de la variable de entorno o usamos 'mx' por defecto
+const ENV = (process.env.COUNTRY_ENV || 'mx') as Environment;
+const environment = environments[ENV];
+
+if (!environment) {
+    throw new Error(`Environment "${ENV}" is not supported. Available environments: ${Object.keys(environments).join(', ')}`);
+}
+
+export default environment;
